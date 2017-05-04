@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class GridAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<Fruit> fruit;
+    Boolean priceVisible = false;
 
     public GridAdapter(Context context, ArrayList<Fruit> fruit){
         this.context = context;
@@ -44,6 +46,19 @@ public class GridAdapter extends BaseAdapter {
             convertView = new GridItem(context);
         ((GridItem)convertView).setData(fruit.get(position));
 
+        TextView price = (TextView)convertView.findViewById(R.id.f_price);
+
+        if(priceVisible){
+            price.setVisibility(View.VISIBLE);
+        }else {
+            price.setVisibility(View.GONE);
+        }
+
         return convertView;
+    }
+
+    public void setVisible(Boolean checked){
+        priceVisible = checked;
+        notifyDataSetChanged();
     }
 }
