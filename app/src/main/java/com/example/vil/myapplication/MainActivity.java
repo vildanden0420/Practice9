@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView name;
     EditText price;
     ImageView image;
+    AddFruit addFruit;
+    int pos;
 
 
     int imageList[] = {R.drawable.abocado, R.drawable.banana, R.drawable.cherry,
@@ -49,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
         price = (EditText)findViewById(R.id.f_price);
         image = (ImageView)findViewById(R.id.image1);
         button = (Button)findViewById(R.id.b_add);
+        addFruit = (AddFruit)findViewById(R.id.add);
 
         data.add(new Fruit("아보카도","2000", Fruit.image[0]));
-        data.add(new Fruit("바나나", "3000",imageList[1]));
-        data.add(new Fruit("체리", "4000" ,imageList[2]));
-        data.add(new Fruit("크랜베리", "5000",imageList[3]));
+        data.add(new Fruit("바나나", "3000",Fruit.image[1]));
+        data.add(new Fruit("체리", "4000" ,Fruit.image[2]));
+        data.add(new Fruit("크랜베리", "5000",Fruit.image[3]));
 
         adapter = new GridAdapter(this, data);
         gridView.setAdapter(adapter);
@@ -63,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                name.setText(data.get(position).name);
-                price.setText(data.get(position).price);
-                image.setImageResource(Fruit.image[data.get(position).imgno]);
+                Fruit fruitItem = (Fruit)adapter.getItem(position);
+                name.setText(fruitItem.name);
+                price.setText(fruitItem.price);
+                image.setImageResource(fruitItem.imgno);
                 button.setText("M");
+                pos = position;
 
             }
         });
@@ -77,9 +82,27 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setVisible(isChecked);
             }
         });
-        
+
         name.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, nameList));
+
+        addFruit.setOnAddListener(new AddFruit.OnAddListener() {
+            @Override
+            public void onAdd(String name, String price, int imgno) {
+                data.add(new Fruit(name,price,imgno));
+                addFruit.buttonSetting();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        addFruit.setOnModifyListener(new AddFruit.OnModifyListener() {
+            @Override
+            public void onModify(String name, String price, int imgno) {
+                data.set(pos, new Fruit(name, price, imgno));
+                addFruit.buttonSetting();
+                adapter.notifyDataSetChanged();
+            }
+        });
 
     }
 }

@@ -44,10 +44,9 @@ public class AddFruit extends LinearLayout implements View.OnClickListener {
         if(v==b_add){
             if(b_add.getText().toString().equals("ADD")){
                 onAddListener.onAdd(name.getText().toString(), price.getText().toString(),Fruit.image[imageno]);
-                b_add.setText("M");
+
             }else{
                 onModifyListener.onModify(name.getText().toString(), price.getText().toString(),Fruit.image[imageno]);
-                b_add.setText("ADD");
             }
 
         }else {
@@ -75,6 +74,15 @@ public class AddFruit extends LinearLayout implements View.OnClickListener {
 
     public void setOnModifyListener(OnModifyListener onModifyListener) {
         this.onModifyListener = onModifyListener;
+    }
+
+    public void buttonSetting(){
+        if(b_add.getText().toString().equals("ADD")){
+            clear();
+        }else {
+            b_add.setText("ADD");
+            clear();
+        }
     }
 
     public void clear(){
