@@ -16,7 +16,9 @@
         android:layout_marginRight="20dp"
         android:background="#fff"
         android:padding="5dp"
-        android:hint="과일이름"/>
+        android:hint="과일이름"
+        android:completionThreshold="1"
+        />
 
     <EditText
         android:id="@+id/f_price"

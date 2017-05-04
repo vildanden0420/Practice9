@@ -77,5 +77,10 @@ public class AddFruit extends LinearLayout implements View.OnClickListener {
         this.onModifyListener = onModifyListener;
     }
 
+    public void clear(){
+        name.setText("");
+        price.setText("");
+        img.setImageResource(Fruit.image[0]);
+    }
 
 }

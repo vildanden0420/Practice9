@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,12 +21,17 @@ public class MainActivity extends AppCompatActivity {
     GridView gridView;
     GridAdapter adapter;
     CheckBox checkBox;
-    Button button;
+    Button cart_b, button;
+    AutoCompleteTextView name;
+    EditText price;
+    ImageView image;
 
 
     int imageList[] = {R.drawable.abocado, R.drawable.banana, R.drawable.cherry,
             R.drawable.cranberry, R.drawable.grape, R.drawable.kiwi,
             R.drawable.orange, R.drawable.watermelon};
+    final static String[] nameList = {"아보카도", "바나나", "체리","크랜베리",
+            "포도", "키위", "오렌지", "수박"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +45,12 @@ public class MainActivity extends AppCompatActivity {
         gridView = (GridView)findViewById(R.id.gridView);
         button = (Button)findViewById(R.id.button1);
         checkBox = (CheckBox)findViewById(R.id.checkBox1);
+        name = (AutoCompleteTextView)findViewById(R.id.f_name);
+        price = (EditText)findViewById(R.id.f_price);
+        image = (ImageView)findViewById(R.id.image1);
+        button = (Button)findViewById(R.id.b_add);
 
-        data.add(new Fruit("아보카도","2000", imageList[0]));
+        data.add(new Fruit("아보카도","2000", Fruit.image[0]));
         data.add(new Fruit("바나나", "3000",imageList[1]));
         data.add(new Fruit("체리", "4000" ,imageList[2]));
         data.add(new Fruit("크랜베리", "5000",imageList[3]));
@@ -52,11 +62,6 @@ public class MainActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                AutoCompleteTextView name = (AutoCompleteTextView)findViewById(R.id.f_name);
-                EditText price = (EditText)findViewById(R.id.f_price);
-                ImageView image = (ImageView)findViewById(R.id.image1);
-                Button button = (Button)findViewById(R.id.b_add);
 
                 name.setText(data.get(position).name);
                 price.setText(data.get(position).price);
@@ -72,5 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setVisible(isChecked);
             }
         });
+        
+        name.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, nameList));
+
     }
 }
